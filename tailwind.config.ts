@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,46 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				danger: "#ea384c",
+				warning: "#f97316",
+				success: "#10b981",
+				info: "#0ea5e9",
+				// Custom theme colors
+				theme: {
+					'blue': {
+						100: '#E6F1FE',
+						200: '#CCE3FD',
+						300: '#99C8FB',
+						400: '#66ACF9',
+						500: '#3390F7',
+						600: '#0074F5',
+						700: '#005DC4',
+						800: '#004793',
+						900: '#003062',
+					},
+					'dark': {
+						100: '#D1D2D4',
+						200: '#A3A5A9',
+						300: '#75777F',
+						400: '#5F6169',
+						500: '#474A54',
+						600: '#303340',
+						700: '#1E222E',
+						800: '#151825',
+						900: '#0C0E1B',
+					},
+					'purple': {
+						100: '#F0E6FE',
+						200: '#E1CCFD',
+						300: '#C399FB',
+						400: '#A566F9',
+						500: '#8733F7',
+						600: '#6900F5',
+						700: '#5400C4',
+						800: '#3F0093',
+						900: '#2A0062',
+					},
 				}
 			},
 			borderRadius: {
@@ -84,11 +125,43 @@ export default {
 					to: {
 						height: '0'
 					}
-				}
+				},
+				'pulse-slow': {
+					'0%, 100%': { opacity: '1' },
+					'50%': { opacity: '0.5' },
+				},
+				'fade-in': {
+					from: { opacity: '0' },
+					to: { opacity: '1' },
+				},
+				'fade-out': {
+					from: { opacity: '1' },
+					to: { opacity: '0' },
+				},
+				'scale-in': {
+					from: { transform: 'scale(0.95)', opacity: '0' },
+					to: { transform: 'scale(1)', opacity: '1' },
+				},
+				'scale-out': {
+					from: { transform: 'scale(1)', opacity: '1' },
+					to: { transform: 'scale(0.95)', opacity: '0' },
+				},
+				'ping-slow': {
+					'75%, 100%': {
+						transform: 'scale(2)',
+						opacity: '0',
+					},
+				},
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'pulse-slow': 'pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+				'fade-in': 'fade-in 0.3s ease-in',
+				'fade-out': 'fade-out 0.3s ease-out',
+				'scale-in': 'scale-in 0.2s ease-out',
+				'scale-out': 'scale-out 0.2s ease-out',
+				'ping-slow': 'ping-slow 2.5s cubic-bezier(0, 0, 0.2, 1) infinite',
 			}
 		}
 	},
