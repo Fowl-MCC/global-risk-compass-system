@@ -4,6 +4,8 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import { CommandPalette } from '../command/CommandPalette';
 import { useCommandStore } from '../../store/commandStore';
+import CodexPanel from '../codex/CodexPanel';
+import { useCodexStore } from '../../store/codexStore';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -11,6 +13,7 @@ interface AppLayoutProps {
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const { isOpen, setIsOpen } = useCommandStore();
+  const { isCodexOpen } = useCodexStore();
 
   const handleKeyDown = (e: KeyboardEvent) => {
     if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -33,6 +36,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           {children}
         </main>
       </div>
+      {isCodexOpen && <CodexPanel />}
       {isOpen && <CommandPalette />}
     </div>
   );
