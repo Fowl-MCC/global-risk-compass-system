@@ -123,6 +123,19 @@ const HolographicPanel: React.FC<{
 };
 
 const StockWatchlistPanel: React.FC = () => {
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        type: 'spring', 
+        damping: 15, 
+        stiffness: 100 
+      }
+    }
+  };
+  
   return (
     <motion.div variants={itemVariants}>
       <HolographicPanel className="h-full">
@@ -139,6 +152,19 @@ const StockWatchlistPanel: React.FC = () => {
 };
 
 const ThreatPredictorPanel: React.FC = () => {
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { 
+        type: 'spring', 
+        damping: 15, 
+        stiffness: 100 
+      }
+    }
+  };
+  
   return (
     <motion.div variants={itemVariants}>
       <HolographicPanel className="h-full">
