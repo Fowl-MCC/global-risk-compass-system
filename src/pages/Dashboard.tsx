@@ -54,7 +54,7 @@ const Dashboard: React.FC = () => {
           </div>
           <motion.button 
             className="absolute bottom-2 right-2 bg-theme-blue-600/80 backdrop-blur-sm px-3 py-1 rounded-md text-xs"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgba(51, 144, 247, 0.5)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => openCodex('1')}
           >
@@ -76,7 +76,21 @@ const Dashboard: React.FC = () => {
           <div className="h-full overflow-hidden">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-lg font-medium text-primary">Event Feed</h2>
-              <span className="text-xs bg-theme-dark-600 px-2 py-1 rounded text-warning">5 new alerts</span>
+              <motion.span 
+                className="text-xs bg-theme-dark-600 px-2 py-1 rounded text-warning"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.9, 1, 0.9]
+                }}
+                transition={{
+                  duration: 2,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatType: "reverse"
+                }}
+              >
+                5 new alerts
+              </motion.span>
             </div>
             <EventList className="flex-1" />
           </div>
@@ -106,19 +120,51 @@ const HolographicPanel: React.FC<{
   className?: string;
 }> = ({ children, className }) => {
   return (
-    <div className={`relative rounded-lg bg-theme-dark-700/40 backdrop-blur-sm border border-theme-dark-600/50 overflow-hidden shadow-lg ${className}`}>
+    <motion.div 
+      className={`relative rounded-lg bg-theme-dark-700/40 backdrop-blur-sm border border-theme-dark-600/50 overflow-hidden shadow-lg ${className}`}
+      whileHover={{
+        boxShadow: [
+          '0 4px 12px rgba(0, 0, 0, 0.1)',
+          '0 8px 24px rgba(51, 144, 247, 0.15)'
+        ],
+        borderColor: 'rgba(51, 144, 247, 0.3)',
+        transition: { duration: 0.3 }
+      }}
+    >
       {/* Holographic glow effect */}
-      <div className="absolute inset-0 bg-gradient-to-br from-theme-blue-500/5 to-theme-purple-600/5 pointer-events-none" />
+      <motion.div 
+        className="absolute inset-0 bg-gradient-to-br from-theme-blue-500/5 to-theme-purple-600/5 pointer-events-none"
+        animate={{
+          backgroundPosition: ['0% 0%', '100% 100%'],
+        }}
+        transition={{
+          duration: 15,
+          ease: "linear",
+          repeat: Infinity,
+          repeatType: "reverse"
+        }}
+      />
       <div className="absolute inset-0 bg-grid-pattern opacity-10 pointer-events-none" />
       
       {/* Top highlight */}
-      <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-theme-blue-500/30 to-transparent pointer-events-none" />
+      <motion.div 
+        className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-theme-blue-500/30 to-transparent pointer-events-none"
+        animate={{
+          opacity: [0.3, 0.6, 0.3],
+          backgroundPosition: ['0% 0%', '100% 0%'],
+        }}
+        transition={{
+          duration: 3,
+          ease: "linear",
+          repeat: Infinity,
+        }}
+      />
       
       {/* Panel content */}
       <div className="p-4 h-full relative z-10">
         {children}
       </div>
-    </div>
+    </motion.div>
   );
 };
 
@@ -133,7 +179,19 @@ const StockWatchlistPanel: React.FC<PanelProps> = ({ variants }) => {
         <div className="h-full overflow-hidden">
           <div className="flex items-center justify-between mb-3">
             <h2 className="text-lg font-medium text-primary">Market Watch</h2>
-            <span className="text-xs bg-theme-blue-600/20 px-2 py-1 rounded text-theme-blue-400">LIVE</span>
+            <motion.span 
+              className="text-xs bg-theme-blue-600/20 px-2 py-1 rounded text-theme-blue-400"
+              animate={{
+                boxShadow: ['0 0 0 rgba(51, 144, 247, 0)', '0 0 8px rgba(51, 144, 247, 0.5)', '0 0 0 rgba(51, 144, 247, 0)']
+              }}
+              transition={{
+                duration: 2,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            >
+              LIVE
+            </motion.span>
           </div>
           <StockWatchlist />
         </div>
@@ -148,9 +206,19 @@ const ThreatPredictorPanel: React.FC<PanelProps> = ({ variants }) => {
       <HolographicPanel className="h-full">
         <div className="h-full overflow-hidden">
           <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-medium bg-gradient-to-r from-theme-blue-400 to-theme-purple-500 bg-clip-text text-transparent">
+            <motion.h2 
+              className="text-lg font-medium bg-gradient-to-r from-theme-blue-400 to-theme-purple-500 bg-clip-text text-transparent"
+              animate={{
+                backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'],
+              }}
+              transition={{
+                duration: 8,
+                ease: "easeInOut",
+                repeat: Infinity,
+              }}
+            >
               AI Forecast
-            </h2>
+            </motion.h2>
             <div className="flex items-center gap-1">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-theme-purple-400 opacity-75"></span>
