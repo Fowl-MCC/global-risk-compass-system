@@ -63,8 +63,8 @@ const Dashboard: React.FC = () => {
         </HolographicPanel>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
-          <StockWatchlistPanel />
-          <ThreatPredictorPanel />
+          <StockWatchlistPanel variants={itemVariants} />
+          <ThreatPredictorPanel variants={itemVariants} />
         </div>
       </motion.div>
       
@@ -122,22 +122,13 @@ const HolographicPanel: React.FC<{
   );
 };
 
-const StockWatchlistPanel: React.FC = () => {
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        type: 'spring', 
-        damping: 15, 
-        stiffness: 100 
-      }
-    }
-  };
-  
+interface PanelProps {
+  variants?: any;
+}
+
+const StockWatchlistPanel: React.FC<PanelProps> = ({ variants }) => {
   return (
-    <motion.div variants={itemVariants}>
+    <motion.div variants={variants}>
       <HolographicPanel className="h-full">
         <div className="h-full overflow-hidden">
           <div className="flex items-center justify-between mb-3">
@@ -151,22 +142,9 @@ const StockWatchlistPanel: React.FC = () => {
   );
 };
 
-const ThreatPredictorPanel: React.FC = () => {
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { 
-        type: 'spring', 
-        damping: 15, 
-        stiffness: 100 
-      }
-    }
-  };
-  
+const ThreatPredictorPanel: React.FC<PanelProps> = ({ variants }) => {
   return (
-    <motion.div variants={itemVariants}>
+    <motion.div variants={variants}>
       <HolographicPanel className="h-full">
         <div className="h-full overflow-hidden">
           <div className="flex items-center justify-between mb-3">
