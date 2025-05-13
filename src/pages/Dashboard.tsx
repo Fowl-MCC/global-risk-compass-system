@@ -36,24 +36,24 @@ const Dashboard: React.FC = () => {
 
   return (
     <motion.div 
-      className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 h-full"
+      className="grid grid-cols-12 gap-8 h-full"
       initial="hidden"
       animate="visible"
       variants={containerVariants}
     >
       <motion.div 
-        className="md:col-span-2 lg:col-span-2 flex flex-col gap-4"
+        className="col-span-12 md:col-span-8 flex flex-col gap-8"
         variants={itemVariants}
       >
-        <HolographicPanel className="h-[300px] relative overflow-hidden">
+        <HolographicPanel className="h-[380px] relative overflow-hidden">
           <div className="absolute inset-0">
             <WorldMap className="h-full" />
           </div>
-          <div className="absolute top-2 left-2 bg-theme-dark-800/80 backdrop-blur-sm px-3 py-1 rounded-md border border-theme-dark-600 text-sm font-medium">
+          <div className="absolute top-6 left-6 bg-theme-dark-800/80 backdrop-blur-sm px-4 py-2 rounded-lg border border-theme-dark-600 text-base font-medium tracking-wide">
             Global Risk Heatmap
           </div>
           <motion.button 
-            className="absolute bottom-2 right-2 bg-theme-blue-600/80 backdrop-blur-sm px-3 py-1 rounded-md text-xs"
+            className="absolute bottom-6 right-6 bg-theme-blue-600/80 backdrop-blur-sm px-5 py-2 rounded-lg text-sm tracking-wide"
             whileHover={{ scale: 1.05, boxShadow: '0 0 8px rgba(51, 144, 247, 0.5)' }}
             whileTap={{ scale: 0.98 }}
             onClick={() => openCodex('1')}
@@ -62,22 +62,22 @@ const Dashboard: React.FC = () => {
           </motion.button>
         </HolographicPanel>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 flex-1">
           <StockWatchlistPanel variants={itemVariants} />
           <ThreatPredictorPanel variants={itemVariants} />
         </div>
       </motion.div>
       
       <motion.div 
-        className="lg:col-span-1 flex flex-col"
+        className="col-span-12 md:col-span-4 flex flex-col gap-8"
         variants={itemVariants}
       >
         <HolographicPanel className="flex-1">
           <div className="h-full overflow-hidden">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-medium text-primary">Event Feed</h2>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-medium tracking-wide text-primary">Event Feed</h2>
               <motion.span 
-                className="text-xs bg-theme-dark-600 px-2 py-1 rounded text-warning"
+                className="text-sm bg-theme-dark-600 px-3 py-1.5 rounded-lg text-warning"
                 animate={{
                   scale: [1, 1.05, 1],
                   opacity: [0.9, 1, 0.9]
@@ -95,17 +95,12 @@ const Dashboard: React.FC = () => {
             <EventList className="flex-1" />
           </div>
         </HolographicPanel>
-      </motion.div>
-      
-      <motion.div 
-        className="lg:col-span-1 flex flex-col"
-        variants={itemVariants}
-      >
+        
         <HolographicPanel className="flex-1">
           <div className="h-full overflow-hidden">
-            <div className="flex items-center justify-between mb-3">
-              <h2 className="text-lg font-medium text-primary">News Feed</h2>
-              <span className="text-xs bg-theme-dark-600 px-2 py-1 rounded">Last updated 3m ago</span>
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-medium tracking-wide text-primary">News Feed</h2>
+              <span className="text-sm bg-theme-dark-600 px-3 py-1.5 rounded-lg">Last updated 3m ago</span>
             </div>
             <NewsFeed className="flex-1" />
           </div>
@@ -121,11 +116,11 @@ const HolographicPanel: React.FC<{
 }> = ({ children, className }) => {
   return (
     <motion.div 
-      className={`relative rounded-lg bg-theme-dark-700/40 backdrop-blur-sm border border-theme-dark-600/50 overflow-hidden shadow-lg ${className}`}
+      className={`relative rounded-2xl bg-theme-dark-700/40 backdrop-blur-sm border border-theme-dark-600/50 overflow-hidden shadow-lg ${className}`}
       whileHover={{
         boxShadow: [
-          '0 4px 12px rgba(0, 0, 0, 0.1)',
-          '0 8px 24px rgba(51, 144, 247, 0.15)'
+          '0 8px 24px rgba(0, 0, 0, 0.2)',
+          '0 12px 32px rgba(51, 144, 247, 0.15)'
         ],
         borderColor: 'rgba(51, 144, 247, 0.3)',
         transition: { duration: 0.3 }
@@ -161,7 +156,7 @@ const HolographicPanel: React.FC<{
       />
       
       {/* Panel content */}
-      <div className="p-4 h-full relative z-10">
+      <div className="p-8 h-full relative z-10">
         {children}
       </div>
     </motion.div>
@@ -177,10 +172,10 @@ const StockWatchlistPanel: React.FC<PanelProps> = ({ variants }) => {
     <motion.div variants={variants}>
       <HolographicPanel className="h-full">
         <div className="h-full overflow-hidden">
-          <div className="flex items-center justify-between mb-3">
-            <h2 className="text-lg font-medium text-primary">Market Watch</h2>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-xl font-medium tracking-wide text-primary">Market Watch</h2>
             <motion.span 
-              className="text-xs bg-theme-blue-600/20 px-2 py-1 rounded text-theme-blue-400"
+              className="text-sm bg-theme-blue-600/20 px-3 py-1.5 rounded-lg text-theme-blue-400"
               animate={{
                 boxShadow: ['0 0 0 rgba(51, 144, 247, 0)', '0 0 8px rgba(51, 144, 247, 0.5)', '0 0 0 rgba(51, 144, 247, 0)']
               }}
@@ -205,9 +200,9 @@ const ThreatPredictorPanel: React.FC<PanelProps> = ({ variants }) => {
     <motion.div variants={variants}>
       <HolographicPanel className="h-full">
         <div className="h-full overflow-hidden">
-          <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center justify-between mb-6">
             <motion.h2 
-              className="text-lg font-medium bg-gradient-to-r from-theme-blue-400 to-theme-purple-500 bg-clip-text text-transparent"
+              className="text-xl font-medium tracking-wide bg-gradient-to-r from-theme-blue-400 to-theme-purple-500 bg-clip-text text-transparent"
               animate={{
                 backgroundPosition: ['0% 0%', '100% 0%', '0% 0%'],
               }}
@@ -219,12 +214,12 @@ const ThreatPredictorPanel: React.FC<PanelProps> = ({ variants }) => {
             >
               AI Forecast
             </motion.h2>
-            <div className="flex items-center gap-1">
-              <span className="relative flex h-2 w-2">
+            <div className="flex items-center gap-2">
+              <span className="relative flex h-3 w-3">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-theme-purple-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-theme-purple-500"></span>
+                <span className="relative inline-flex rounded-full h-3 w-3 bg-theme-purple-500"></span>
               </span>
-              <span className="text-xs">Predicting</span>
+              <span className="text-sm tracking-wide">Predicting</span>
             </div>
           </div>
           <ThreatPredictor />

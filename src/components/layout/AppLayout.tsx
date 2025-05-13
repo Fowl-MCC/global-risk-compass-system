@@ -48,7 +48,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
         <motion.main 
-          className="flex-1 overflow-auto p-4"
+          className="flex-1 overflow-auto p-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
           transition={{ 
@@ -57,7 +57,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
             ease: "easeOut"
           }}
         >
-          {children}
+          <div className="max-w-7xl mx-auto w-full">
+            {children}
+          </div>
         </motion.main>
       </div>
       <AnimatePresence mode="wait">
