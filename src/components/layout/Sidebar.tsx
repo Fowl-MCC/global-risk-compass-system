@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { useCommandStore } from '../../store/commandStore';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { TacticalBadge } from '@/components/ui/tactical-badge';
 
 const Sidebar: React.FC = () => {
   const [collapsed, setCollapsed] = React.useState(false);
@@ -70,7 +71,7 @@ const Sidebar: React.FC = () => {
             <div className="w-8 h-8 rounded-md bg-gradient-to-br from-theme-blue-500 to-theme-purple-600 flex items-center justify-center mr-2 shadow-lg shadow-theme-blue-500/20">
               <span className="font-bold">E</span>
             </div>
-            <span className="font-bold text-lg">EyesWorld</span>
+            <span className="font-bold text-lg tracking-wider">EyesWorld</span>
           </motion.div>
         )}
         <Button
@@ -107,7 +108,7 @@ const Sidebar: React.FC = () => {
                 {/* Connecting dots */}
                 {index > 0 && item.unlocked && (
                   <motion.div 
-                    className="absolute left-[23px] -top-6 h-6 w-[1px] bg-theme-blue-500/30"
+                    className="absolute left-[23px] -top-6 h-6 w-[1px] bg-theme-blue-500/30 constellation-line"
                     initial={{ height: 0 }}
                     animate={{ height: 24 }}
                     transition={{ 
@@ -222,7 +223,7 @@ const Sidebar: React.FC = () => {
       <div className="p-4">
         {!collapsed ? (
           <motion.div 
-            className="p-3 rounded-lg bg-theme-dark-700/50 border border-theme-dark-600 cursor-pointer hover:bg-theme-dark-700 transition-colors"
+            className="p-3 rounded-lg bg-theme-dark-700/70 border border-theme-dark-600 backdrop-blur-sm cursor-pointer"
             onClick={() => setIsOpen(true)}
             whileHover={{ 
               backgroundColor: 'rgba(30, 34, 46, 0.9)',
@@ -239,20 +240,10 @@ const Sidebar: React.FC = () => {
               </p>
               <div className="text-xs bg-theme-dark-600 px-1.5 py-0.5 rounded text-muted-foreground">⌘K</div>
             </div>
-            <div className="flex items-center mt-1 text-sm">
-              <motion.div
-                className="h-2 w-2 rounded-full bg-warning mr-2"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.7, 1, 0.7]
-                }}
-                transition={{
-                  duration: 2,
-                  ease: "easeInOut",
-                  repeat: Infinity,
-                }}
-              />
-              <p className="font-medium">ELEVATED RISK</p>
+            <div className="flex items-center mt-3">
+              <TacticalBadge variant="high" size="sm" animation="pulse" className="w-full justify-center">
+                ELEVATED RISK
+              </TacticalBadge>
             </div>
           </motion.div>
         ) : (

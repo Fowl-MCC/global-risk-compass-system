@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import { CommandPalette } from '../command/CommandPalette';
+import EnhancedCommandPalette from '../command/EnhancedCommandPalette';
 import { useCommandStore } from '../../store/commandStore';
 import CodexPanel from '../codex/CodexPanel';
 import { useCodexStore } from '../../store/codexStore';
@@ -13,7 +13,7 @@ interface AppLayoutProps {
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-  const { isOpen, setIsOpen } = useCommandStore();
+  const { isOpen } = useCommandStore();
   const { isCodexOpen } = useCodexStore();
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -23,18 +23,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
     setTimeout(() => {
       setIsLoaded(true);
     }, 500);
-  }, []);
-
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
-      e.preventDefault();
-      setIsOpen(true);
-    }
-  };
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
   return (
@@ -48,7 +36,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
         <motion.main 
-          className="flex-1 overflow-auto p-8"
+          className="flex-1 overflow-auto"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
           transition={{ 
@@ -80,7 +68,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      {isOpen && <CommandPalette />}
+      {isOpen && <EnhancedCommandPalette />}
     </motion.div>
   );
 };

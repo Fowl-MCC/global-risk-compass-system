@@ -13,6 +13,7 @@ import Analysis from "./pages/Analysis";
 import Forecasts from "./pages/Forecasts";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
+import EnhancedCommandPalette from "./components/command/EnhancedCommandPalette";
 
 const queryClient = new QueryClient();
 
