@@ -1,7 +1,7 @@
 
 import * as React from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { motion } from "framer-motion";
+import { motion, MotionProps } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const tacticalBadgeVariants = cva(
@@ -49,7 +49,7 @@ const tacticalBadgeVariants = cva(
   }
 );
 
-export interface TacticalBadgeProps
+interface TacticalBadgeProps 
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof tacticalBadgeVariants> {
   leftIcon?: React.ReactNode;
@@ -74,7 +74,8 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
       '--glow-color': glowColor,
     } as React.CSSProperties;
 
-    const animationProps = React.useMemo(() => {
+    // Custom animation props for the motion div
+    const getAnimationProps = () => {
       if (animation === 'pulse') {
         return {
           animate: { 
@@ -87,27 +88,10 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
           }
         };
       }
-      if (animation === 'ping') {
-        return {
-          initial: { scale: 1, opacity: 1 },
-          animate: { scale: 1 },
-          whileInView: {
-            opacity: 1,
-          },
-          className: "relative",
-          _after: {
-            content: '""',
-            position: "absolute",
-            inset: 0,
-            zIndex: -1,
-            animation: "ping-slow 2s cubic-bezier(0, 0, 0.2, 1) infinite",
-            borderRadius: pill ? "9999px" : "0.375rem",
-            backgroundColor: glowColor,
-          }
-        };
-      }
       return {};
-    }, [animation, glowColor, pill]);
+    };
+
+    const animationProps = getAnimationProps();
 
     return (
       <motion.div
@@ -141,6 +125,7 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
     );
   }
 );
+
 TacticalBadge.displayName = "TacticalBadge";
 
 export { TacticalBadge, tacticalBadgeVariants };

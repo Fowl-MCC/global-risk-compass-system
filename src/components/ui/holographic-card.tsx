@@ -1,9 +1,9 @@
 
 import React from 'react';
-import { motion, MotionProps } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { cn } from '@/lib/utils';
 
-interface HolographicCardProps extends React.HTMLAttributes<HTMLDivElement>, MotionProps {
+interface HolographicCardProps {
   children: React.ReactNode;
   glowColor?: 'blue' | 'purple' | 'green' | 'orange' | 'red' | 'none';
   glowIntensity?: 'low' | 'medium' | 'high';
@@ -67,8 +67,8 @@ const HolographicCard = React.forwardRef<HTMLDivElement, HolographicCardProps>(
           variantMap[variant],
           className
         )}
-        whileHover={interactive ? { scale: 1.01 } : {}}
-        whileTap={interactive ? { scale: 0.99 } : {}}
+        whileHover={interactive ? { scale: 1.01 } : undefined}
+        whileTap={interactive ? { scale: 0.99 } : undefined}
         layout
         {...props}
       >

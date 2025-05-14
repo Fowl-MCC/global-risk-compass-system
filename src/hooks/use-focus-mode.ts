@@ -1,44 +1,41 @@
 
 import { useState, useEffect } from 'react';
+import { create } from 'zustand';
 
-export type FocusModeLevel = 'off' | 'minimal' | 'hyperfocus';
+type FocusMode = 'off' | 'minimal' | 'hyperfocus';
 
-export function useFocusMode() {
-  const [focusMode, setFocusMode] = useState<FocusModeLevel>('off');
+interface FocusModeState {
+  focusMode: FocusMode;
+  setFocusMode: (mode: FocusMode) => void;
+  toggleFocusMode: () => void;
+}
+
+export const useFocusModeStore = create<FocusModeState>((set) => ({
+  focusMode: 'off',
+  setFocusMode: (mode) => set({ focusMode: mode }),
+  toggleFocusMode: () => set((state) => ({ 
+    focusMode: state.focusMode === 'off' 
+      ? 'minimal' 
+      : state.focusMode === 'minimal' 
+        ? 'hyperfocus' 
+        : 'off' 
+  })),
+}));
+
+export const useFocusMode = () => {
+  const store = useFocusModeStore();
   
-  // Apply focus mode classes to the document body
   useEffect(() => {
-    document.body.classList.remove('focus-mode-minimal', 'focus-mode-hyperfocus');
-    
-    if (focusMode === 'minimal') {
-      document.body.classList.add('focus-mode-minimal');
-    } else if (focusMode === 'hyperfocus') {
-      document.body.classList.add('focus-mode-hyperfocus');
-    }
+    // Add class to body for global styling
+    document.body.classList.toggle('focus-mode-active', store.focusMode !== 'off');
+    document.body.classList.toggle('focus-mode-minimal', store.focusMode === 'minimal');
+    document.body.classList.toggle('focus-mode-hyperfocus', store.focusMode === 'hyperfocus');
     
     return () => {
-      document.body.classList.remove('focus-mode-minimal', 'focus-mode-hyperfocus');
+      // Clean up effect
+      document.body.classList.remove('focus-mode-active', 'focus-mode-minimal', 'focus-mode-hyperfocus');
     };
-  }, [focusMode]);
+  }, [store.focusMode]);
   
-  // Toggle between focus mode levels
-  const toggleFocusMode = () => {
-    setFocusMode(current => {
-      if (current === 'off') return 'minimal';
-      if (current === 'minimal') return 'hyperfocus';
-      return 'off';
-    });
-  };
-  
-  // Set a specific focus mode
-  const setFocusModeLevel = (level: FocusModeLevel) => {
-    setFocusMode(level);
-  };
-  
-  return { 
-    focusMode, 
-    toggleFocusMode, 
-    setFocusMode: setFocusModeLevel,
-    isFocused: focusMode !== 'off'
-  };
-}
+  return store;
+};

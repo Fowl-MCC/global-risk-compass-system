@@ -7,6 +7,14 @@ import { useCommandStore } from '../../store/commandStore';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { TacticalBadge } from '@/components/ui/tactical-badge';
 import { useFocusMode } from '@/hooks/use-focus-mode';
+import { 
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
 
 const Header: React.FC = () => {
   const { setIsOpen } = useCommandStore();
@@ -40,8 +48,9 @@ const Header: React.FC = () => {
           onClick={() => setIsOpen(true)}
         >
           <Search className="w-4 h-4" />
-          <span className="tracking-wide">Search events, regions, entities...</span>
-          <kbd className="ml-3 pointer-events-none inline-flex h-5 select-none items-center gap-1 rounded border border-theme-dark-500 bg-theme-dark-700 px-2 font-mono text-[10px] font-medium opacity-100">
+          <span className="tracking-wide hidden md:inline">Search events, regions, entities...</span>
+          <span className="tracking-wide md:hidden">Search...</span>
+          <kbd className="ml-3 pointer-events-none hidden md:inline-flex h-5 select-none items-center gap-1 rounded border border-theme-dark-500 bg-theme-dark-700 px-2 font-mono text-[10px] font-medium opacity-100">
             <span className="text-xs">⌘</span>K
           </kbd>
         </Button>
@@ -73,16 +82,30 @@ const Header: React.FC = () => {
           </Button>
         </div>
         
-        <motion.div
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.98 }}
-        >
-          <Avatar className="h-12 w-12 ring-2 ring-theme-blue-600/30 hover:ring-theme-blue-500/50 transition-all duration-300">
-            <AvatarFallback className="bg-theme-blue-700 text-white text-lg">
-              EW
-            </AvatarFallback>
-          </Avatar>
-        </motion.div>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              className="cursor-pointer"
+            >
+              <Avatar className="h-12 w-12 ring-2 ring-theme-blue-600/30 hover:ring-theme-blue-500/50 transition-all duration-300">
+                <AvatarFallback className="bg-theme-blue-700 text-white text-lg">
+                  EW
+                </AvatarFallback>
+              </Avatar>
+            </motion.div>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56 mr-4 bg-theme-dark-700 border-theme-dark-600 backdrop-blur-md">
+            <DropdownMenuLabel>My Account</DropdownMenuLabel>
+            <DropdownMenuSeparator className="bg-theme-dark-600/50" />
+            <DropdownMenuItem className="hover:bg-theme-dark-600/70 cursor-pointer">Profile</DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-theme-dark-600/70 cursor-pointer">Settings</DropdownMenuItem>
+            <DropdownMenuItem className="hover:bg-theme-dark-600/70 cursor-pointer">Help</DropdownMenuItem>
+            <DropdownMenuSeparator className="bg-theme-dark-600/50" />
+            <DropdownMenuItem className="hover:bg-danger/20 text-danger cursor-pointer">Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </motion.header>
   );

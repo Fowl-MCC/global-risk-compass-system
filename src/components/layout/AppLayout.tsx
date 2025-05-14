@@ -3,18 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import EnhancedCommandPalette from '../command/EnhancedCommandPalette';
-import { useCommandStore } from '../../store/commandStore';
 import CodexPanel from '../codex/CodexPanel';
 import { useCodexStore } from '../../store/codexStore';
+import { useFocusMode } from '@/hooks/use-focus-mode';
+import { cn } from '@/lib/utils';
 
 interface AppLayoutProps {
   children: React.ReactNode;
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-  const { isOpen } = useCommandStore();
   const { isCodexOpen } = useCodexStore();
+  const { focusMode } = useFocusMode();
   const [isLoaded, setIsLoaded] = useState(false);
 
   // Initialize app with loading effect
@@ -27,7 +27,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   return (
     <motion.div 
-      className="flex h-screen w-full overflow-hidden bg-theme-dark-800 text-white"
+      className={cn(
+        "flex h-screen w-full overflow-hidden bg-theme-dark-800 text-white",
+        focusMode === 'minimal' && "focus-mode-minimal",
+        focusMode === 'hyperfocus' && "focus-mode-hyperfocus"
+      )}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
@@ -68,7 +72,6 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           </motion.div>
         )}
       </AnimatePresence>
-      {isOpen && <EnhancedCommandPalette />}
     </motion.div>
   );
 };

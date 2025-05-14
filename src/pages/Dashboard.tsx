@@ -9,7 +9,7 @@ import NewsFeed from '../components/dashboard/NewsFeed';
 import { useCodexStore } from '../store/codexStore';
 import { HolographicCard } from '@/components/ui/holographic-card';
 import { TacticalBadge } from '@/components/ui/tactical-badge';
-import { Brain, ArrowUp, ArrowDown, Globe, FileText } from 'lucide-react';
+import { Brain, ArrowUp, ArrowDown, Globe, FileText, Newspaper, AlertTriangle, Briefcase } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const { openCodex } = useCodexStore();
@@ -183,8 +183,5 @@ const Dashboard: React.FC = () => {
     </motion.div>
   );
 };
-
-// Import this component at the top
-import { Newspaper, AlertTriangle, Briefcase } from 'lucide-react';
 
 export default Dashboard;

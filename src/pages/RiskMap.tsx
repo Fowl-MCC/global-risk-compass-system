@@ -17,9 +17,9 @@ const RiskMap: React.FC = () => {
   const filteredEvents = activeFilter === 'all' 
     ? mockRiskEvents 
     : mockRiskEvents.filter(event => {
-        if (activeFilter === 'political') return event.category === 'Political';
-        if (activeFilter === 'natural') return event.category === 'Natural Disaster';
-        if (activeFilter === 'economic') return event.category === 'Economic';
+        if (activeFilter === 'political') return event.categories.includes('Political');
+        if (activeFilter === 'natural') return event.categories.includes('Natural Disaster');
+        if (activeFilter === 'economic') return event.categories.includes('Economic');
         return true;
       });
   
