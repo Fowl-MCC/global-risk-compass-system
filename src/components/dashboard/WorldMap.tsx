@@ -44,7 +44,8 @@ const WorldMap: React.FC<WorldMapProps> = ({ className }) => {
         
         // Add click handler to open codex
         pin.addEventListener('click', () => {
-          openCodex(event.id);
+          // Fix: Convert the number to string before passing to openCodex
+          openCodex(event.id.toString());
         });
         
         mapContainer.appendChild(pin);
@@ -182,8 +183,9 @@ const WorldMap: React.FC<WorldMapProps> = ({ className }) => {
           </div>
         </div>
         
-        {/* Enhance the global CSS for marker animation in index.css */}
-        <style jsx>{`
+        {/* Fix: Remove the jsx prop and use a proper style tag */}
+        <style>
+          {`
           .map-marker-pulse {
             box-shadow: 0 0 0 rgba(255, 255, 255, 0.4);
             animation: pulse 2s infinite;
@@ -220,7 +222,8 @@ const WorldMap: React.FC<WorldMapProps> = ({ className }) => {
               box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
             }
           }
-        `}</style>
+          `}
+        </style>
       </CardContent>
     </Card>
   );
