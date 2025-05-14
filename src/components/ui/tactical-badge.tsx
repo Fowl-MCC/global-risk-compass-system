@@ -119,6 +119,7 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
           <span 
             className={cn(
               "absolute inset-0 rounded-full opacity-75",
+              pill ? "rounded-full" : "rounded-md",
               "animate-ping-slow"
             )}
             style={{ backgroundColor: glowColor }}

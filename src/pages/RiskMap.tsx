@@ -6,8 +6,11 @@ import { mockRiskEvents } from '../data/mockData';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { HolographicCard } from '@/components/ui/holographic-card';
 import { TacticalBadge } from '@/components/ui/tactical-badge';
-import { Globe, Activity, Boxes, MapPin, Info } from 'lucide-react';
+import { Globe, Activity, Boxes, MapPin, Info, Command, Lightbulb } from 'lucide-react';
 import { useCodexStore } from '../store/codexStore';
+import WorldMap from '@/components/dashboard/WorldMap';
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 
 const RiskMap: React.FC = () => {
   const { openCodex } = useCodexStore();
@@ -56,148 +59,119 @@ const RiskMap: React.FC = () => {
         className="flex items-center justify-between mb-8"
         variants={itemVariants}
       >
-        <h1 className="text-2xl font-bold tracking-wider text-white">Global Risk Heatmap</h1>
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold tracking-wider text-white">Global Risk Heatmap</h1>
+          <p className="text-muted-foreground text-sm">Real-time visualization of global risk factors and threats</p>
+        </div>
         
         <div className="flex items-center space-x-4">
-          <TacticalBadge variant="default" leftIcon={<Info className="h-3 w-3" />}>
+          <TacticalBadge variant="default" leftIcon={<Info className="h-3 w-3" />} glow="subtle">
             Last Updated: 4 minutes ago
           </TacticalBadge>
+          
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  <Button 
+                    size="sm"
+                    variant="outline" 
+                    className="bg-theme-dark-700/80 border-theme-dark-600 text-theme-blue-400 flex items-center gap-2 hover:bg-theme-dark-600/80 hover:border-theme-blue-500/30 hover:text-theme-blue-300"
+                  >
+                    <Command className="h-3.5 w-3.5" />
+                    <span className="text-xs">⌘K</span>
+                  </Button>
+                </motion.div>
+              </TooltipTrigger>
+              <TooltipContent side="bottom" className="bg-theme-dark-700/90 backdrop-blur-md border-theme-dark-600">
+                <p className="text-xs">Open Command Palette</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
       </motion.div>
       
       <motion.div variants={itemVariants}>
         <Tabs defaultValue="map" className="w-full">
           <div className="flex justify-between items-center mb-6">
-            <TabsList className="bg-theme-dark-700/50 backdrop-blur-md p-1 rounded-xl">
+            <TabsList className="bg-theme-dark-700/50 backdrop-blur-md p-1 rounded-xl border border-theme-dark-600/50">
               <TabsTrigger 
                 value="map" 
-                className="data-[state=active]:bg-theme-dark-600 data-[state=active]:text-white rounded-lg transition-all duration-300 px-4"
+                className="data-[state=active]:bg-theme-blue-500/20 data-[state=active]:text-theme-blue-400 data-[state=active]:shadow-[0_0_10px_rgba(0,116,245,0.2)] rounded-lg transition-all duration-300 px-4 hover:text-theme-blue-400"
               >
                 <Globe className="h-4 w-4 mr-2" />
                 Map View
               </TabsTrigger>
               <TabsTrigger 
                 value="regions" 
-                className="data-[state=active]:bg-theme-dark-600 data-[state=active]:text-white rounded-lg transition-all duration-300 px-4"
+                className="data-[state=active]:bg-theme-blue-500/20 data-[state=active]:text-theme-blue-400 data-[state=active]:shadow-[0_0_10px_rgba(0,116,245,0.2)] rounded-lg transition-all duration-300 px-4 hover:text-theme-blue-400"
               >
                 <MapPin className="h-4 w-4 mr-2" />
                 By Region
               </TabsTrigger>
               <TabsTrigger 
                 value="sectors" 
-                className="data-[state=active]:bg-theme-dark-600 data-[state=active]:text-white rounded-lg transition-all duration-300 px-4"
+                className="data-[state=active]:bg-theme-blue-500/20 data-[state=active]:text-theme-blue-400 data-[state=active]:shadow-[0_0_10px_rgba(0,116,245,0.2)] rounded-lg transition-all duration-300 px-4 hover:text-theme-blue-400"
               >
                 <Boxes className="h-4 w-4 mr-2" />
                 By Sector
               </TabsTrigger>
             </TabsList>
             
-            <div className="flex gap-2">
-              <TacticalBadge
-                variant={activeFilter === 'all' ? "default" : "dark"}
-                interactive
-                glow={activeFilter === 'all' ? "subtle" : "none"}
-                onClick={() => setActiveFilter('all')}
-              >
-                All Events
-              </TacticalBadge>
-              <TacticalBadge
-                variant={activeFilter === 'political' ? "default" : "dark"}
-                interactive
-                glow={activeFilter === 'political' ? "subtle" : "none"}
-                onClick={() => setActiveFilter('political')}
-              >
-                Political
-              </TacticalBadge>
-              <TacticalBadge
-                variant={activeFilter === 'natural' ? "default" : "dark"}
-                interactive
-                glow={activeFilter === 'natural' ? "subtle" : "none"}
-                onClick={() => setActiveFilter('natural')}
-              >
-                Natural
-              </TacticalBadge>
-              <TacticalBadge
-                variant={activeFilter === 'economic' ? "default" : "dark"}
-                interactive
-                glow={activeFilter === 'economic' ? "subtle" : "none"}
-                onClick={() => setActiveFilter('economic')}
-              >
-                Economic
-              </TacticalBadge>
+            <div className="flex gap-3">
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <TacticalBadge
+                  variant={activeFilter === 'all' ? "default" : "dark"}
+                  interactive
+                  glow={activeFilter === 'all' ? "subtle" : "none"}
+                  onClick={() => setActiveFilter('all')}
+                >
+                  All Events
+                </TacticalBadge>
+              </motion.div>
+              
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <TacticalBadge
+                  variant={activeFilter === 'political' ? "default" : "dark"}
+                  interactive
+                  glow={activeFilter === 'political' ? "subtle" : "none"}
+                  onClick={() => setActiveFilter('political')}
+                >
+                  Political
+                </TacticalBadge>
+              </motion.div>
+              
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <TacticalBadge
+                  variant={activeFilter === 'natural' ? "default" : "dark"}
+                  interactive
+                  glow={activeFilter === 'natural' ? "subtle" : "none"}
+                  onClick={() => setActiveFilter('natural')}
+                >
+                  Natural
+                </TacticalBadge>
+              </motion.div>
+              
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+                <TacticalBadge
+                  variant={activeFilter === 'economic' ? "default" : "dark"}
+                  interactive
+                  glow={activeFilter === 'economic' ? "subtle" : "none"}
+                  onClick={() => setActiveFilter('economic')}
+                >
+                  Economic
+                </TacticalBadge>
+              </motion.div>
             </div>
           </div>
 
           <TabsContent value="map" className="mt-0">
-            <HolographicCard glowColor="blue" className="overflow-hidden">
+            <HolographicCard glowColor="blue" className="overflow-hidden" glowIntensity="medium">
               <CardContent className="p-0 h-[calc(100vh-250px)]">
-                <div className="w-full h-full bg-theme-dark-700 relative">
-                  <div className="absolute top-4 left-4 z-10 flex gap-2">
-                    <TacticalBadge variant="high" glow="subtle" animation="pulse">
-                      <span className="flex items-center">
-                        <Activity className="h-3 w-3 mr-1" />
-                        3 High Alerts
-                      </span>
-                    </TacticalBadge>
-                    <TacticalBadge variant="medium" glow="subtle">
-                      <span className="flex items-center">
-                        <Activity className="h-3 w-3 mr-1" />
-                        7 Medium Alerts
-                      </span>
-                    </TacticalBadge>
-                  </div>
-                  <div className="absolute top-4 right-4 z-10">
-                    <button
-                      className="bg-theme-dark-700/80 backdrop-blur-sm text-theme-blue-400 px-5 py-1.5 rounded-lg text-sm flex items-center gap-2 border border-theme-dark-600 hover:border-theme-blue-500/30 hover:bg-theme-dark-600/80 transition-all duration-300"
-                      onClick={() => openCodex('1')}
-                    >
-                      View Codex Entry
-                    </button>
-                  </div>
-
-                  {/* World Map Content */}
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <p className="text-xl font-bold mb-2">Interactive Risk Map</p>
-                      <p className="text-muted-foreground">
-                        In a complete implementation, this would display an interactive map showing global risk hotspots.
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Sample risk markers with improved visibility */}
-                  {filteredEvents.map((event) => (
-                    <motion.div 
-                      key={event.id}
-                      className={`
-                        absolute w-4 h-4 rounded-full map-marker-pulse z-10 cursor-pointer
-                        ${event.riskLevel === 'High' ? 'risk-high' : 
-                          event.riskLevel === 'Medium' ? 'risk-medium' : 'risk-low'}
-                      `}
-                      style={{
-                        left: `${((event.longitude + 180) / 360) * 100}%`,
-                        top: `${((90 - event.latitude) / 180) * 100}%`
-                      }}
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      transition={{ 
-                        type: "spring", 
-                        stiffness: 260, 
-                        damping: 20,
-                        delay: Math.random() * 0.5 
-                      }}
-                      whileHover={{ 
-                        scale: 1.5, 
-                        boxShadow: event.riskLevel === 'High' 
-                          ? '0 0 15px rgba(234, 56, 76, 0.7)' 
-                          : event.riskLevel === 'Medium'
-                            ? '0 0 15px rgba(249, 115, 22, 0.7)'
-                            : '0 0 15px rgba(16, 185, 129, 0.7)'
-                      }}
-                      title={`${event.title} - ${event.location}`}
-                    />
-                  ))}
-                </div>
+                <WorldMap />
               </CardContent>
             </HolographicCard>
           </TabsContent>
@@ -209,22 +183,40 @@ const RiskMap: React.FC = () => {
                   {['North America', 'South America', 'Europe', 'Asia', 'Africa', 'Oceania'].map(region => (
                     <motion.div
                       key={region}
-                      className="p-4 border border-theme-dark-600 rounded-xl bg-theme-dark-700/50 backdrop-blur-sm hover:bg-theme-dark-600/50 transition-all duration-300"
-                      whileHover={{ y: -5, boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)' }}
+                      className="p-6 border border-theme-dark-600/50 rounded-xl bg-theme-dark-700/50 backdrop-blur-sm hover:bg-theme-dark-600/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,0,0,0.3)]"
+                      whileHover={{ y: -5, borderColor: 'rgba(255,255,255,0.2)' }}
                     >
-                      <div className="flex justify-between items-center mb-3">
-                        <h3 className="font-medium">{region}</h3>
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="font-medium text-lg">{region}</h3>
                         <TacticalBadge
                           variant={region === 'Asia' ? 'high' : region === 'Europe' ? 'medium' : 'low'}
                           size="sm"
+                          glow={region === 'Asia' ? 'strong' : 'subtle'}
                         >
                           {region === 'Asia' ? 'HIGH' : region === 'Europe' ? 'MEDIUM' : 'LOW'}
                         </TacticalBadge>
                       </div>
-                      <div className="text-sm text-muted-foreground">
+                      <div className="text-sm text-muted-foreground mb-3">
                         {region === 'Asia' ? '8 active incidents' : 
                          region === 'Europe' ? '5 active incidents' : 
                          `${Math.floor(Math.random() * 4) + 1} active incidents`}
+                      </div>
+                      <div className="flex flex-wrap gap-2 mt-2">
+                        {region === 'Asia' && (
+                          <>
+                            <TacticalBadge variant="high" size="sm">Political</TacticalBadge>
+                            <TacticalBadge variant="medium" size="sm">Economic</TacticalBadge>
+                          </>
+                        )}
+                        {region === 'Europe' && (
+                          <>
+                            <TacticalBadge variant="medium" size="sm">Economic</TacticalBadge>
+                            <TacticalBadge variant="low" size="sm">Supply Chain</TacticalBadge>
+                          </>
+                        )}
+                        {region !== 'Asia' && region !== 'Europe' && (
+                          <TacticalBadge variant="low" size="sm">Stable</TacticalBadge>
+                        )}
                       </div>
                     </motion.div>
                   ))}
@@ -240,20 +232,22 @@ const RiskMap: React.FC = () => {
                   {['Technology', 'Finance', 'Energy', 'Agriculture', 'Manufacturing', 'Healthcare'].map(sector => (
                     <motion.div
                       key={sector}
-                      className="p-4 border border-theme-dark-600 rounded-xl bg-theme-dark-700/50 backdrop-blur-sm hover:bg-theme-dark-600/50 transition-all duration-300"
-                      whileHover={{ y: -5, boxShadow: '0 10px 30px -10px rgba(0,0,0,0.3)' }}
+                      className="p-6 border border-theme-dark-600/50 rounded-xl bg-theme-dark-700/50 backdrop-blur-sm hover:bg-theme-dark-600/50 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,0,0,0.3)]"
+                      whileHover={{ y: -5, borderColor: 'rgba(255,255,255,0.2)' }}
                     >
-                      <div className="flex justify-between items-center mb-3">
-                        <h3 className="font-medium">{sector}</h3>
+                      <div className="flex justify-between items-center mb-4">
+                        <h3 className="font-medium text-lg">{sector}</h3>
                         <TacticalBadge
                           variant={sector === 'Energy' ? 'high' : sector === 'Technology' ? 'medium' : 'low'}
                           size="sm"
+                          glow={sector === 'Energy' ? 'strong' : 'subtle'}
                         >
                           {sector === 'Energy' ? 'HIGH' : sector === 'Technology' ? 'MEDIUM' : 'LOW'}
                         </TacticalBadge>
                       </div>
-                      <div className="h-2 bg-theme-dark-600 rounded-full mt-3 overflow-hidden">
-                        <div 
+                      <div className="text-sm text-muted-foreground">Risk Impact Level</div>
+                      <div className="h-2.5 bg-theme-dark-600/80 rounded-full mt-3 overflow-hidden">
+                        <motion.div 
                           className={`h-full rounded-full ${
                             sector === 'Energy' ? 'bg-danger' : 
                             sector === 'Technology' ? 'bg-warning' : 'bg-success'
@@ -265,7 +259,21 @@ const RiskMap: React.FC = () => {
                               Math.floor(Math.random() * 40) + 10
                             }%` 
                           }}
+                          initial={{ width: 0 }}
+                          animate={{ 
+                            width: `${
+                              sector === 'Energy' ? '85' : 
+                              sector === 'Technology' ? '60' : 
+                              Math.floor(Math.random() * 40) + 10
+                            }%` 
+                          }}
+                          transition={{ duration: 1, delay: 0.2 }}
                         />
+                      </div>
+                      <div className="mt-4 flex justify-between text-sm">
+                        <span>Low</span>
+                        <span>Medium</span>
+                        <span>High</span>
                       </div>
                     </motion.div>
                   ))}
@@ -274,6 +282,28 @@ const RiskMap: React.FC = () => {
             </HolographicCard>
           </TabsContent>
         </Tabs>
+      </motion.div>
+      
+      <motion.div 
+        className="mt-6 text-center"
+        variants={itemVariants}
+      >
+        <Tooltip>
+          <TooltipTrigger asChild>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="inline-flex items-center gap-2 bg-theme-blue-500/10 text-theme-blue-400 px-4 py-2 rounded-lg border border-theme-blue-500/20 hover:bg-theme-blue-500/15 hover:border-theme-blue-500/30 transition-all duration-300 hover:shadow-[0_0_15px_rgba(0,116,245,0.2)]"
+              onClick={() => openCodex('global-risk')} 
+            >
+              <Lightbulb size={16} />
+              <span>Explore Risk Intelligence Codex</span>
+            </motion.button>
+          </TooltipTrigger>
+          <TooltipContent className="bg-theme-dark-700/90 backdrop-blur-md border-theme-dark-600">
+            <p className="text-xs">View detailed analysis and forecasts</p>
+          </TooltipContent>
+        </Tooltip>
       </motion.div>
     </motion.div>
   );
