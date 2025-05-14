@@ -50,7 +50,7 @@ const tacticalBadgeVariants = cva(
 );
 
 interface TacticalBadgeProps 
-  extends React.HTMLAttributes<HTMLDivElement>,
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onAnimationStart' | 'onDrag' | 'onDragEnd' | 'onDragStart'>,
     VariantProps<typeof tacticalBadgeVariants> {
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -75,7 +75,7 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
     } as React.CSSProperties;
 
     // Custom animation props for the motion div
-    const getAnimationProps = () => {
+    const getAnimationProps = (): Partial<MotionProps> => {
       if (animation === 'pulse') {
         return {
           animate: { 
@@ -93,6 +93,12 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
 
     const animationProps = getAnimationProps();
 
+    // Extract any non-compatible props to avoid passing them to motion.div
+    const { 
+      onAnimationStart, onDrag, onDragEnd, onDragStart, 
+      ...safeHtmlProps 
+    } = props;
+
     return (
       <motion.div
         ref={ref}
@@ -106,7 +112,7 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
         }), className)}
         style={styleWithGlow}
         {...animationProps}
-        {...props}
+        {...safeHtmlProps}
       >
         {leftIcon && <span className="mr-1">{leftIcon}</span>}
         {children}
