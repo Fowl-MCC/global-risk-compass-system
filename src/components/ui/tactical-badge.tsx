@@ -93,11 +93,8 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
 
     const animationProps = getAnimationProps();
 
-    // Extract any non-compatible props to avoid passing them to motion.div
-    const { 
-      onAnimationStart, onDrag, onDragEnd, onDragStart, 
-      ...safeHtmlProps 
-    } = props;
+    // Note: We don't need to extract these properties anymore since we've already excluded them
+    // in the TacticalBadgeProps interface with Omit<>. The props here won't contain these properties.
 
     return (
       <motion.div
@@ -112,7 +109,7 @@ const TacticalBadge = React.forwardRef<HTMLDivElement, TacticalBadgeProps>(
         }), className)}
         style={styleWithGlow}
         {...animationProps}
-        {...safeHtmlProps}
+        {...props}
       >
         {leftIcon && <span className="mr-1">{leftIcon}</span>}
         {children}
